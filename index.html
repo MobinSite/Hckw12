@@ -1,707 +1,340 @@
 ```html
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>چالش مخفی داش مبین</title>
+<title>👹 غول</title>
 
 <style>
-
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
-    min-height: 100vh;
-    background: #050505;
-    color: white;
-    font-family: Tahoma, Arial, sans-serif;
-    overflow-x: hidden;
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+    font-family: Arial, sans-serif;
 }
 
-#main {
-    min-height: 100vh;
-    padding: 40px 20px;
-
+#screen {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    background:
+        radial-gradient(circle, #182000 0%, #050505 45%, #000 100%);
+}
+
+/* تصویر غول */
+#monster {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter:
+        brightness(0.55)
+        contrast(1.5)
+        saturate(1.4)
+        drop-shadow(0 0 35px #7cff00);
+
+    animation: breathing 2.5s infinite ease-in-out;
+}
+
+/* افکت نفس کشیدن */
+@keyframes breathing {
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.035);
+    }
+}
+
+/* تاریکی روی تصویر */
+.dark {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    pointer-events: none;
+}
+
+/* نوشته پایین */
+#warning {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+
+    color: #ff1111;
+    font-size: clamp(35px, 6vw, 80px);
+    font-weight: 900;
+
+    text-shadow:
+        0 0 5px #ff0000,
+        0 0 15px #ff0000,
+        0 0 35px #800000;
+
+    animation: textPulse 1s infinite;
+}
+
+@keyframes textPulse {
+    0%,100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+/* خون */
+#blood {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
 
     background:
         radial-gradient(
             circle at center,
-            #102010,
-            #050505 60%,
-            #000
+            transparent 25%,
+            rgba(100,0,0,.15) 50%,
+            rgba(120,0,0,.75) 100%
         );
 }
 
-.container {
-    width: 700px;
-    max-width: 95%;
-
-    padding: 35px;
-
-    background: rgba(0,0,0,0.85);
-
-    border: 1px solid #00ff41;
-    border-radius: 20px;
-
-    box-shadow:
-        0 0 30px rgba(0,255,65,0.25);
-}
-
-h1 {
-    text-align: center;
-    color: #00ff41;
-    font-size: 40px;
-    margin-bottom: 10px;
-
-    text-shadow:
-        0 0 15px #00ff41;
-}
-
-.intro {
-    text-align: center;
-    color: #aaa;
-    margin-bottom: 35px;
-}
-
-.step {
-    display: none;
-
-    padding: 25px;
-
-    border: 1px solid #222;
-    border-radius: 15px;
-
-    background: #090909;
-
-    margin-bottom: 20px;
-}
-
-.step.active {
-    display: block;
-}
-
-.step h2 {
-    color: #00ff41;
-    margin-bottom: 15px;
-}
-
-.step p {
-    line-height: 2;
-    color: #ddd;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 12px 25px;
-
-    border: 1px solid #00ff41;
-    border-radius: 8px;
-
-    background: #001000;
-    color: #00ff41;
-
-    font-size: 17px;
-    cursor: pointer;
-
-    transition: 0.25s;
-}
-
-button:hover {
-    background: #00ff41;
-    color: black;
-
-    box-shadow:
-        0 0 15px #00ff41;
-
-    transform: scale(1.03);
-}
-
-input {
-    width: 100%;
-
-    padding: 13px;
-    margin-bottom: 15px;
-
-    background: black;
-    color: #00ff41;
-
-    border: 1px solid #00ff41;
-    border-radius: 8px;
-
-    outline: none;
-
-    font-size: 17px;
-}
-
-.options {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.option {
-    flex: 1;
-    min-width: 120px;
-}
-
-.message {
-    margin-top: 15px;
-    color: #ff4444;
-    min-height: 25px;
-}
-
-#secretBox {
-    width: 70px;
-    height: 70px;
-
-    background: #111;
-
-    border: 1px solid #111;
-
-    cursor: pointer;
-
+/* صفحه مرگ */
+#dead {
     position: absolute;
-}
+    inset: 0;
 
-#boxArea {
-    height: 180px;
-
-    position: relative;
-
-    border: 1px dashed #333;
-
-    overflow: hidden;
-
-    background: #020202;
-}
-
-#finish {
-    display: none;
-
-    min-height: 100vh;
-
-    background: black;
-
+    display: flex;
     justify-content: center;
     align-items: center;
-
     flex-direction: column;
 
-    text-align: center;
+    background: rgba(0,0,0,.9);
 
-    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
 }
 
-#finish h1 {
-    color: red;
+#dead h1 {
+    margin: 0;
+    color: #ff0000;
 
-    font-size: 70px;
+    font-size: clamp(70px, 15vw, 190px);
 
-    animation: glitch 0.15s infinite;
+    font-weight: 900;
 
     text-shadow:
         0 0 10px red,
-        0 0 30px red,
-        0 0 60px red;
+        0 0 40px red,
+        0 0 80px darkred;
+
+    transform: scale(0.5);
 }
 
-#finish p {
-    margin-top: 25px;
-
-    font-size: 28px;
-
-    color: #00ff41;
-
-    text-shadow:
-        0 0 15px #00ff41;
+#dead p {
+    color: white;
+    font-size: 25px;
 }
 
-@keyframes glitch {
+/* شروع */
+#start {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
 
-    0% {
-        transform: translate(0);
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    25% {
-        transform: translate(-5px, 3px);
-    }
-
-    50% {
-        transform: translate(5px, -3px);
-    }
-
-    75% {
-        transform: translate(-3px, -2px);
-    }
-
-    100% {
-        transform: translate(0);
-    }
+    background: #000;
 }
 
-@media(max-width:600px) {
+#start button {
+    padding: 18px 45px;
 
-    h1 {
-        font-size: 30px;
-    }
+    border: 2px solid #55ff00;
+    border-radius: 12px;
 
-    #finish h1 {
-        font-size: 42px;
-    }
+    background: #071000;
+    color: #7cff00;
 
-    #finish p {
-        font-size: 20px;
-    }
+    font-size: 25px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 25px #55ff00;
 }
 
+#start button:hover {
+    background: #152800;
+    transform: scale(1.05);
+}
 </style>
 </head>
 
 <body>
 
+<div id="start">
+    <button onclick="startScare()">👹 ورود</button>
+</div>
 
-<!-- =========================
-     بخش چالش
-========================= -->
+<div id="screen">
 
-<div id="main">
+    <!-- عکس غول -->
+    <img id="MONSTER" src="monster.png">
 
-    <div class="container">
+    <div class="dark"></div>
 
-        <h1>
-            🕵️ چالش مخفی داش مبین
-        </h1>
+    <div id="warning">
+        تو امشب میمیری
+    </div>
 
-        <p class="intro">
-            اگر می‌خوای به پایان برسی،
-            مرحله‌ها رو به ترتیب انجام بده!
-        </p>
+    <div id="blood"></div>
 
-
-        <!-- مرحله 1 -->
-
-        <div class="step active" id="step1">
-
-            <h2>
-                مرحله ۱
-            </h2>
-
-            <p>
-                روی دکمه زیر کلیک کن تا مرحله اول کامل شود.
-            </p>
-
-            <button onclick="completeStep1()">
-                شروع مرحله
-            </button>
-
-        </div>
-
-
-        <!-- مرحله 2 -->
-
-        <div class="step" id="step2">
-
-            <h2>
-                مرحله ۲
-            </h2>
-
-            <p>
-                کلمه زیر را دقیقاً داخل کادر بنوی:
-            </p>
-
-            <p style="color:#00ff41; font-size:25px;">
-                MOBIN
-            </p>
-
-            <input
-                id="wordInput"
-                placeholder="کلمه را وارد کن..."
-            >
-
-            <button onclick="checkWord()">
-                تأیید
-            </button>
-
-            <div
-                class="message"
-                id="wordMessage">
-            </div>
-
-        </div>
-
-
-        <!-- مرحله 3 -->
-
-        <div class="step" id="step3">
-
-            <h2>
-                مرحله ۳
-            </h2>
-
-            <p>
-                فقط گزینه‌ای را انتخاب کن که نوشته:
-                <b>SECRET</b>
-            </p>
-
-            <div class="options">
-
-                <button
-                    class="option"
-                    onclick="wrongOption()">
-                    NORMAL
-                </button>
-
-                <button
-                    class="option"
-                    onclick="wrongOption()">
-                    SYSTEM
-                </button>
-
-                <button
-                    class="option"
-                    onclick="correctOption()">
-                    SECRET
-                </button>
-
-            </div>
-
-            <div
-                class="message"
-                id="optionMessage">
-            </div>
-
-        </div>
-
-
-        <!-- مرحله 4 -->
-
-        <div class="step" id="step4">
-
-            <h2>
-                مرحله ۴
-            </h2>
-
-            <p>
-                مربع مخفی را پیدا کن و روی آن کلیک کن!
-            </p>
-
-            <div id="boxArea">
-
-                <div id="secretBox"></div>
-
-            </div>
-
-        </div>
-
-
-        <!-- مرحله 5 -->
-
-        <div class="step" id="step5">
-
-            <h2>
-                مرحله آخر
-            </h2>
-
-            <p>
-                همه مراحل با موفقیت انجام شدند.
-                <br>
-                اگر آماده‌ای، روی دکمه پایان بزن.
-            </p>
-
-            <button onclick="finishGame()">
-                🔴 دکمه پایان
-            </button>
-
-        </div>
-
+    <div id="dead">
+        <h1>YOU DIED</h1>
+        <p>هیچ راه فراری نیست...</p>
     </div>
 
 </div>
 
-
-<!-- =========================
-     صفحه پایان
-========================= -->
-
-<div id="finish">
-
-    <h1>
-        YOU HACKED HAHAHA
-    </h1>
-
-    <p>
-        😂 این فقط برای شوخی بود!
-    </p>
-
-</div>
-
-
-
 <script>
 
+let audioContext;
 
-/* مرحله فعلی */
+function scarySound() {
 
-let currentStep = 1;
+    audioContext =
+        new (window.AudioContext || window.webkitAudioContext)();
 
+    const now = audioContext.currentTime;
 
-/* رفتن به مرحله بعد */
+    // صدای بم و ترسناک
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
-function nextStep(number) {
+    osc.type = "sawtooth";
 
-    document
-        .getElementById(
-            "step" + currentStep
-        )
-        .classList.remove("active");
+    osc.frequency.setValueAtTime(80, now);
+    osc.frequency.exponentialRampToValueAtTime(25, now + 2.5);
 
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.5, now + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 3);
 
-    currentStep = number;
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
 
+    osc.start();
+    osc.stop(now + 3);
 
-    document
-        .getElementById(
-            "step" + currentStep
-        )
-        .classList.add("active");
-
-}
-
-
-/* =========================
-   مرحله 1
-========================= */
-
-function completeStep1() {
-
-    nextStep(2);
-
-}
-
-
-/* =========================
-   مرحله 2
-========================= */
-
-function checkWord() {
-
-    const input =
-        document.getElementById(
-            "wordInput"
-        );
-
-    const message =
-        document.getElementById(
-            "wordMessage"
-        );
-
-
-    if (
-        input.value.trim().toUpperCase()
-        === "MOBIN"
-    ) {
-
-        message.style.color =
-            "#00ff41";
-
-        message.textContent =
-            "✓ درست بود!";
-
-        setTimeout(() => {
-
-            nextStep(3);
-
-        }, 700);
-
-    }
-
-    else {
-
-        message.style.color =
-            "#ff4444";
-
-        message.textContent =
-            "✗ کلمه اشتباهه! دوباره امتحان کن.";
-
-    }
-
-}
-
-
-/* =========================
-   مرحله 3
-========================= */
-
-function wrongOption() {
-
-    const message =
-        document.getElementById(
-            "optionMessage"
-        );
-
-    message.style.color =
-        "#ff4444";
-
-    message.textContent =
-        "✗ اشتباهه! دوباره انتخاب کن.";
-
-}
-
-
-function correctOption() {
-
-    const message =
-        document.getElementById(
-            "optionMessage"
-        );
-
-    message.style.color =
-        "#00ff41";
-
-    message.textContent =
-        "✓ گزینه درست پیدا شد!";
-
-
+    // صدای جیغ کوتاه
     setTimeout(() => {
 
-        nextStep(4);
+        const scream = audioContext.createOscillator();
+        const screamGain = audioContext.createGain();
 
-        moveSecretBox();
+        scream.type = "square";
 
-    }, 700);
+        scream.frequency.setValueAtTime(500, audioContext.currentTime);
+        scream.frequency.exponentialRampToValueAtTime(
+            100,
+            audioContext.currentTime + 0.8
+        );
 
+        screamGain.gain.setValueAtTime(
+            0.25,
+            audioContext.currentTime
+        );
+
+        screamGain.gain.exponentialRampToValueAtTime(
+            0.01,
+            audioContext.currentTime + 0.8
+        );
+
+        scream.connect(screamGain);
+        screamGain.connect(audioContext.destination);
+
+        scream.start();
+        scream.stop(audioContext.currentTime + 0.8);
+
+    }, 400);
 }
 
 
-/* =========================
-   مرحله 4
-========================= */
+function startScare() {
 
-function moveSecretBox() {
+    document.getElementById("start").style.display = "none";
 
-    const area =
-        document.getElementById(
-            "boxArea"
-        );
-
-    const box =
-        document.getElementById(
-            "secretBox"
-        );
-
-
-    const maxX =
-        area.clientWidth - 70;
-
-    const maxY =
-        area.clientHeight - 70;
-
-
-    const x =
-        Math.random() * maxX;
-
-    const y =
-        Math.random() * maxY;
-
-
-    box.style.left =
-        x + "px";
-
-    box.style.top =
-        y + "px";
-
-}
-
-
-/* پیدا کردن مربع */
-
-document
-    .getElementById(
-        "secretBox"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            nextStep(5);
-
-        }
-    );
-
-
-/* =========================
-   پایان
-========================= */
-
-function finishGame() {
-
-    document
-        .getElementById(
-            "main"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "finish"
-        )
-        .style.display =
-        "flex";
-
-
-    /* صدای کوتاه */
-
-    try {
-
-        const audio =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-
-        const oscillator =
-            audio.createOscillator();
-
-        const gain =
-            audio.createGain();
-
-
-        oscillator.frequency.value =
-            700;
-
-        oscillator.type =
-            "square";
-
-        gain.gain.value =
-            0.03;
-
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            audio.destination
-        );
-
-
-        oscillator.start();
-
-        oscillator.stop(
-            audio.currentTime + 0.3
-        );
-
+    // فول‌اسکرین
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
     }
 
-    catch(e) {}
+    scarySound();
+
+    // چند ثانیه بعد افکت مرگ
+    setTimeout(() => {
+
+        const blood = document.getElementById("blood");
+
+        blood.style.opacity = "1";
+
+        blood.animate(
+            [
+                { opacity: 0 },
+                { opacity: 1 },
+                { opacity: 0.6 }
+            ],
+            {
+                duration: 900,
+                iterations: 1
+            }
+        );
+
+    }, 2500);
+
+
+    // صفحه YOU DIED HAHAHAHAHHA
+    setTimeout(() => {
+
+        const dead = document.getElementById("dead");
+
+        dead.style.opacity = "1";
+
+        const title = dead.querySelector("h1");
+
+        title.animate(
+            [
+                {
+                    transform: "scale(0.2)",
+                    opacity: 0
+                },
+                {
+                    transform: "scale(1.15)",
+                    opacity: 1
+                },
+                {
+                    transform: "scale(1)",
+                    opacity: 1
+                }
+            ],
+            {
+                duration: 800,
+                easing: "ease-out"
+            }
+        );
+
+    }, 4500);
 
 }
 
