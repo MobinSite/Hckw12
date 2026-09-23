@@ -1,0 +1,712 @@
+```html
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>چالش مخفی داش مبین</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #050505;
+    color: white;
+    font-family: Tahoma, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+#main {
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #102010,
+            #050505 60%,
+            #000
+        );
+}
+
+.container {
+    width: 700px;
+    max-width: 95%;
+
+    padding: 35px;
+
+    background: rgba(0,0,0,0.85);
+
+    border: 1px solid #00ff41;
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 30px rgba(0,255,65,0.25);
+}
+
+h1 {
+    text-align: center;
+    color: #00ff41;
+    font-size: 40px;
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 0 15px #00ff41;
+}
+
+.intro {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 35px;
+}
+
+.step {
+    display: none;
+
+    padding: 25px;
+
+    border: 1px solid #222;
+    border-radius: 15px;
+
+    background: #090909;
+
+    margin-bottom: 20px;
+}
+
+.step.active {
+    display: block;
+}
+
+.step h2 {
+    color: #00ff41;
+    margin-bottom: 15px;
+}
+
+.step p {
+    line-height: 2;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 12px 25px;
+
+    border: 1px solid #00ff41;
+    border-radius: 8px;
+
+    background: #001000;
+    color: #00ff41;
+
+    font-size: 17px;
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+button:hover {
+    background: #00ff41;
+    color: black;
+
+    box-shadow:
+        0 0 15px #00ff41;
+
+    transform: scale(1.03);
+}
+
+input {
+    width: 100%;
+
+    padding: 13px;
+    margin-bottom: 15px;
+
+    background: black;
+    color: #00ff41;
+
+    border: 1px solid #00ff41;
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 17px;
+}
+
+.options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.option {
+    flex: 1;
+    min-width: 120px;
+}
+
+.message {
+    margin-top: 15px;
+    color: #ff4444;
+    min-height: 25px;
+}
+
+#secretBox {
+    width: 70px;
+    height: 70px;
+
+    background: #111;
+
+    border: 1px solid #111;
+
+    cursor: pointer;
+
+    position: absolute;
+}
+
+#boxArea {
+    height: 180px;
+
+    position: relative;
+
+    border: 1px dashed #333;
+
+    overflow: hidden;
+
+    background: #020202;
+}
+
+#finish {
+    display: none;
+
+    min-height: 100vh;
+
+    background: black;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+#finish h1 {
+    color: red;
+
+    font-size: 70px;
+
+    animation: glitch 0.15s infinite;
+
+    text-shadow:
+        0 0 10px red,
+        0 0 30px red,
+        0 0 60px red;
+}
+
+#finish p {
+    margin-top: 25px;
+
+    font-size: 28px;
+
+    color: #00ff41;
+
+    text-shadow:
+        0 0 15px #00ff41;
+}
+
+@keyframes glitch {
+
+    0% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform: translate(-5px, 3px);
+    }
+
+    50% {
+        transform: translate(5px, -3px);
+    }
+
+    75% {
+        transform: translate(-3px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@media(max-width:600px) {
+
+    h1 {
+        font-size: 30px;
+    }
+
+    #finish h1 {
+        font-size: 42px;
+    }
+
+    #finish p {
+        font-size: 20px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     بخش چالش
+========================= -->
+
+<div id="main">
+
+    <div class="container">
+
+        <h1>
+            🕵️ چالش مخفی داش مبین
+        </h1>
+
+        <p class="intro">
+            اگر می‌خوای به پایان برسی،
+            مرحله‌ها رو به ترتیب انجام بده!
+        </p>
+
+
+        <!-- مرحله 1 -->
+
+        <div class="step active" id="step1">
+
+            <h2>
+                مرحله ۱
+            </h2>
+
+            <p>
+                روی دکمه زیر کلیک کن تا مرحله اول کامل شود.
+            </p>
+
+            <button onclick="completeStep1()">
+                شروع مرحله
+            </button>
+
+        </div>
+
+
+        <!-- مرحله 2 -->
+
+        <div class="step" id="step2">
+
+            <h2>
+                مرحله ۲
+            </h2>
+
+            <p>
+                کلمه زیر را دقیقاً داخل کادر بنوی:
+            </p>
+
+            <p style="color:#00ff41; font-size:25px;">
+                MOBIN
+            </p>
+
+            <input
+                id="wordInput"
+                placeholder="کلمه را وارد کن..."
+            >
+
+            <button onclick="checkWord()">
+                تأیید
+            </button>
+
+            <div
+                class="message"
+                id="wordMessage">
+            </div>
+
+        </div>
+
+
+        <!-- مرحله 3 -->
+
+        <div class="step" id="step3">
+
+            <h2>
+                مرحله ۳
+            </h2>
+
+            <p>
+                فقط گزینه‌ای را انتخاب کن که نوشته:
+                <b>SECRET</b>
+            </p>
+
+            <div class="options">
+
+                <button
+                    class="option"
+                    onclick="wrongOption()">
+                    NORMAL
+                </button>
+
+                <button
+                    class="option"
+                    onclick="wrongOption()">
+                    SYSTEM
+                </button>
+
+                <button
+                    class="option"
+                    onclick="correctOption()">
+                    SECRET
+                </button>
+
+            </div>
+
+            <div
+                class="message"
+                id="optionMessage">
+            </div>
+
+        </div>
+
+
+        <!-- مرحله 4 -->
+
+        <div class="step" id="step4">
+
+            <h2>
+                مرحله ۴
+            </h2>
+
+            <p>
+                مربع مخفی را پیدا کن و روی آن کلیک کن!
+            </p>
+
+            <div id="boxArea">
+
+                <div id="secretBox"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- مرحله 5 -->
+
+        <div class="step" id="step5">
+
+            <h2>
+                مرحله آخر
+            </h2>
+
+            <p>
+                همه مراحل با موفقیت انجام شدند.
+                <br>
+                اگر آماده‌ای، روی دکمه پایان بزن.
+            </p>
+
+            <button onclick="finishGame()">
+                🔴 دکمه پایان
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     صفحه پایان
+========================= -->
+
+<div id="finish">
+
+    <h1>
+        YOU HACKED HAHAHA
+    </h1>
+
+    <p>
+        😂 این فقط برای شوخی بود!
+    </p>
+
+</div>
+
+
+
+<script>
+
+
+/* مرحله فعلی */
+
+let currentStep = 1;
+
+
+/* رفتن به مرحله بعد */
+
+function nextStep(number) {
+
+    document
+        .getElementById(
+            "step" + currentStep
+        )
+        .classList.remove("active");
+
+
+    currentStep = number;
+
+
+    document
+        .getElementById(
+            "step" + currentStep
+        )
+        .classList.add("active");
+
+}
+
+
+/* =========================
+   مرحله 1
+========================= */
+
+function completeStep1() {
+
+    nextStep(2);
+
+}
+
+
+/* =========================
+   مرحله 2
+========================= */
+
+function checkWord() {
+
+    const input =
+        document.getElementById(
+            "wordInput"
+        );
+
+    const message =
+        document.getElementById(
+            "wordMessage"
+        );
+
+
+    if (
+        input.value.trim().toUpperCase()
+        === "MOBIN"
+    ) {
+
+        message.style.color =
+            "#00ff41";
+
+        message.textContent =
+            "✓ درست بود!";
+
+        setTimeout(() => {
+
+            nextStep(3);
+
+        }, 700);
+
+    }
+
+    else {
+
+        message.style.color =
+            "#ff4444";
+
+        message.textContent =
+            "✗ کلمه اشتباهه! دوباره امتحان کن.";
+
+    }
+
+}
+
+
+/* =========================
+   مرحله 3
+========================= */
+
+function wrongOption() {
+
+    const message =
+        document.getElementById(
+            "optionMessage"
+        );
+
+    message.style.color =
+        "#ff4444";
+
+    message.textContent =
+        "✗ اشتباهه! دوباره انتخاب کن.";
+
+}
+
+
+function correctOption() {
+
+    const message =
+        document.getElementById(
+            "optionMessage"
+        );
+
+    message.style.color =
+        "#00ff41";
+
+    message.textContent =
+        "✓ گزینه درست پیدا شد!";
+
+
+    setTimeout(() => {
+
+        nextStep(4);
+
+        moveSecretBox();
+
+    }, 700);
+
+}
+
+
+/* =========================
+   مرحله 4
+========================= */
+
+function moveSecretBox() {
+
+    const area =
+        document.getElementById(
+            "boxArea"
+        );
+
+    const box =
+        document.getElementById(
+            "secretBox"
+        );
+
+
+    const maxX =
+        area.clientWidth - 70;
+
+    const maxY =
+        area.clientHeight - 70;
+
+
+    const x =
+        Math.random() * maxX;
+
+    const y =
+        Math.random() * maxY;
+
+
+    box.style.left =
+        x + "px";
+
+    box.style.top =
+        y + "px";
+
+}
+
+
+/* پیدا کردن مربع */
+
+document
+    .getElementById(
+        "secretBox"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            nextStep(5);
+
+        }
+    );
+
+
+/* =========================
+   پایان
+========================= */
+
+function finishGame() {
+
+    document
+        .getElementById(
+            "main"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "finish"
+        )
+        .style.display =
+        "flex";
+
+
+    /* صدای کوتاه */
+
+    try {
+
+        const audio =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+        const oscillator =
+            audio.createOscillator();
+
+        const gain =
+            audio.createGain();
+
+
+        oscillator.frequency.value =
+            700;
+
+        oscillator.type =
+            "square";
+
+        gain.gain.value =
+            0.03;
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            audio.destination
+        );
+
+
+        oscillator.start();
+
+        oscillator.stop(
+            audio.currentTime + 0.3
+        );
+
+    }
+
+    catch(e) {}
+
+}
+
+</script>
+
+</body>
+</html>
+```
